@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Harmeen Amjad — Laravel Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060608;
+  --bg2:#09090f;
+  --surface:#0f0f1a;
+  --card:#111119;
+  --card2:#13131e;
+  --border:rgba(255,255,255,0.06);
+  --border2:rgba(255,255,255,0.1);
+  --border3:rgba(255,255,255,0.15);
+  --green:#00e87a;
+  --green2:#00ff88;
+  --green-dim:rgba(0,232,122,0.08);
+  --green-glow:rgba(0,232,122,0.25);
+  --green-glow2:rgba(0,232,122,0.12);
+  --blue:#3d7eff;
+  --blue-dim:rgba(61,126,255,0.1);
+  --purple:#8b5cf6;
+  --purple-dim:rgba(139,92,246,0.1);
+  --amber:#f59e0b;
+  --text:#ddddf0;
+  --text2:#b8b8d0;
+  --muted:#6a6a8a;
+  --muted2:#3d3d5c;
+  --font:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --radius:12px;
+  --radius-lg:18px;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:15px;
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--green);color:#000}
+::-webkit-scrollbar{width:2px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--green);border-radius:2px}
+
+/* CURSOR */
+#cursor{
+  width:6px;height:6px;
+  background:var(--green);
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width 0.2s,height 0.2s;
+  mix-blend-mode:difference;
+}
+#cursor-ring{
+  width:28px;height:28px;
+  border:1px solid rgba(0,232,122,0.4);
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width 0.25s,height 0.25s;
+}
+
+/* LAYOUT */
+.layout{display:block;min-height:100vh}
+
+/* TOP NAVBAR */
+.topnav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:200;
+  background:rgba(6,6,8,0.75);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 48px;
+  height:60px;
+}
+
+.nav-logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+}
+.nav-logo-name{
+  font-size:0.95rem;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:-0.02em;
+}
+.nav-logo-badge{
+  font-family:var(--mono);
+  font-size:0.58rem;
+  color:var(--green);
+  background:rgba(0,232,122,0.08);
+  border:1px solid rgba(0,232,122,0.18);
+  padding:3px 8px;
+  border-radius:4px;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  list-style:none;
+}
+.nav-links a{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 14px;
+  border-radius:7px;
+  color:var(--muted);
+  text-decoration:none;
+  font-size:0.8rem;
+  font-weight:500;
+  transition:all 0.18s;
+}
+.nav-links a:hover{color:var(--text2);background:rgba(255,255,255,0.05)}
+.nav-links a.active{color:#fff;background:rgba(0,232,122,0.09);border:1px solid rgba(0,232,122,0.15)}
+.nav-links a .n-icon{font-size:0.72rem}
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.nav-status{
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:0.6rem;
+  color:var(--green);
+  background:rgba(0,232,122,0.07);
+  border:1px solid rgba(0,232,122,0.18);
+  padding:5px 12px;
+  border-radius:100px;
+}
+.status-dot{
+  width:5px;height:5px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 5px var(--green);
+  animation:pulse 2s infinite;
+  flex-shrink:0;
+}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 5px var(--green)}50%{opacity:0.4;box-shadow:none}}
+
+.nav-social{display:flex;gap:6px}
+.social-link{
+  width:32px;height:32px;
+  border-radius:7px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);
+  text-decoration:none;
+  font-size:0.65rem;
+  font-family:var(--mono);
+  font-weight:500;
+  transition:all 0.18s;
+}
+.social-link:hover{border-color:rgba(0,232,122,0.3);color:var(--green);background:var(--green-dim)}
+
+/* MAIN */
+.main{
+  margin-left:0;
+  width:100%;
+  overflow-x:hidden;
+  padding-top:60px;
+}
+
+/* SECTIONS */
+.section{
+  padding:96px 96px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:80px 96px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* grid lines */
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.024) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.024) 1px,transparent 1px);
+  background-size:64px 64px;
+  pointer-events:none;
+}
+/* radial fade */
+.hero::after{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 60% 50%,rgba(0,232,122,0.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* Noise texture overlay */
+.hero-noise{
+  position:absolute;inset:0;
+  opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+.hero-content{position:relative;z-index:1;max-width:760px}
+
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(0,232,122,0.07);
+  border:1px solid rgba(0,232,122,0.2);
+  border-radius:100px;
+  padding:6px 14px 6px 8px;
+  margin-bottom:36px;
+}
+.badge-dot{
+  width:20px;height:20px;
+  border-radius:50%;
+  background:rgba(0,232,122,0.15);
+  display:flex;align-items:center;justify-content:center;
+}
+.badge-dot::after{
+  content:'';
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--green);
+  animation:pulse 2s infinite;
+}
+.badge-text{
+  font-family:var(--mono);
+  font-size:0.65rem;
+  color:var(--green);
+  font-weight:500;
+}
+
+.hero-greeting{
+  font-family:var(--mono);
+  font-size:0.72rem;
+  color:var(--muted);
+  margin-bottom:12px;
+  letter-spacing:0.05em;
+}
+
+.hero-name{
+  font-size:clamp(3.8rem,6.5vw,6rem);
+  font-weight:900;
+  color:#fff;
+  line-height:0.95;
+  letter-spacing:-0.04em;
+  margin-bottom:20px;
+}
+.hero-name .accent{
+  background:linear-gradient(135deg,var(--green) 0%,#00b8ff 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-tagline{
+  font-size:clamp(1rem,1.8vw,1.25rem);
+  color:var(--text2);
+  font-weight:400;
+  max-width:500px;
+  line-height:1.65;
+  margin-bottom:40px;
+}
+.hero-tagline strong{color:#fff;font-weight:600}
+
+/* Stats bar */
+.stats-row{
+  display:flex;
+  gap:0;
+  margin-bottom:48px;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  overflow:hidden;
+  max-width:520px;
+}
+.stat-item{
+  flex:1;
+  padding:18px 20px;
+  border-right:1px solid var(--border);
+  position:relative;
+}
+.stat-item:last-child{border-right:none}
+.stat-num{
+  font-size:1.6rem;
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-0.03em;
+  line-height:1;
+  margin-bottom:4px;
+}
+.stat-num span{color:var(--green);font-size:1.1rem}
+.stat-label{font-family:var(--mono);font-size:0.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em}
+
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 22px;
+  border-radius:8px;
+  font-size:0.82rem;
+  font-weight:600;
+  text-decoration:none;
+  transition:all 0.2s;
+  cursor:pointer;
+  border:none;
+  font-family:var(--font);
+}
+.btn-primary{
+  background:var(--green);
+  color:#000;
+}
+.btn-primary:hover{
+  background:#00ff88;
+  box-shadow:0 4px 24px rgba(0,232,122,0.35);
+  transform:translateY(-1px);
+}
+.btn-ghost{
+  background:transparent;
+  color:var(--text2);
+  border:1px solid var(--border2);
+}
+.btn-ghost:hover{border-color:var(--border3);color:#fff;transform:translateY(-1px)}
+
+/* SECTION HEADER */
+.sec-eyebrow{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+}
+.sec-eyebrow-line{width:20px;height:1px;background:var(--green)}
+.sec-eyebrow-text{
+  font-family:var(--mono);
+  font-size:0.62rem;
+  color:var(--green);
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+}
+.sec-title{
+  font-size:clamp(1.9rem,2.8vw,2.5rem);
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-0.03em;
+  line-height:1.1;
+  margin-bottom:14px;
+}
+.sec-sub{
+  font-size:0.88rem;
+  color:var(--muted);
+  max-width:420px;
+  line-height:1.85;
+  margin-bottom:52px;
+}
+
+/* ABOUT */
+#about{background:var(--bg2)}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:48px;
+  align-items:start;
+}
+
+.profile-card{
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  position:sticky;
+  top:32px;
+}
+.profile-header{
+  background:linear-gradient(160deg,#0c1a14 0%,#090916 100%);
+  padding:36px 28px 28px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+}
+.profile-header::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 120%,rgba(0,232,122,0.1) 0%,transparent 55%);
+  pointer-events:none;
+}
+.avatar-wrap{position:relative;display:inline-block;margin-bottom:16px}
+.avatar{
+  width:72px;height:72px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#00e87a,#3d7eff);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;font-weight:800;
+  color:#000;
+  position:relative;z-index:1;
+}
+.avatar-ring{
+  position:absolute;
+  inset:-3px;
+  border-radius:50%;
+  border:1.5px solid rgba(0,232,122,0.35);
+  animation:spin 8s linear infinite;
+}
+.avatar-ring::before{
+  content:'';
+  position:absolute;
+  top:0;left:50%;
+  transform:translateX(-50%);
+  width:5px;height:5px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 6px var(--green);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.profile-name{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:3px;position:relative}
+.profile-handle{font-family:var(--mono);font-size:0.62rem;color:var(--green);position:relative}
+
+.profile-body{padding:24px 28px}
+.profile-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:9px 0;
+  border-bottom:1px solid var(--border);
+  font-size:0.8rem;
+}
+.profile-row:last-child{border-bottom:none}
+.pr-key{font-family:var(--mono);font-size:0.65rem;color:var(--muted)}
+.pr-val{color:var(--text);font-weight:500;font-size:0.8rem}
+.pr-val.green{color:var(--green)}
+.pr-val.dot::before{content:'● ';font-size:0.5rem;vertical-align:middle}
+
+.about-text h3{
+  font-size:1.3rem;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:-0.02em;
+  line-height:1.35;
+  margin-bottom:18px;
+}
+.about-text p{
+  font-size:0.85rem;
+  color:var(--text2);
+  line-height:1.95;
+  margin-bottom:14px;
+}
+.about-text p strong{color:#fff}
+.about-text p:last-of-type{margin-bottom:0}
+
+.about-divider{
+  height:1px;
+  background:linear-gradient(90deg,var(--border2),transparent);
+  margin:28px 0;
+}
+
+.tag-cloud{display:flex;flex-wrap:wrap;gap:7px}
+.tag{
+  font-family:var(--mono);
+  font-size:0.62rem;
+  padding:5px 11px;
+  border-radius:6px;
+  background:rgba(0,232,122,0.05);
+  border:1px solid rgba(0,232,122,0.12);
+  color:rgba(0,232,122,0.8);
+  transition:all 0.18s;
+}
+.tag:hover{background:rgba(0,232,122,0.1);border-color:rgba(0,232,122,0.25);color:var(--green)}
+
+/* SKILLS */
+#skills{background:var(--bg)}
+
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.skill-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px;
+  transition:all 0.22s;
+  position:relative;
+  overflow:hidden;
+  cursor:default;
+}
+.skill-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(0,232,122,0.04),transparent);
+  opacity:0;
+  transition:opacity 0.25s;
+}
+.skill-card:hover{border-color:rgba(0,232,122,0.2);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,0.4)}
+.skill-card:hover::before{opacity:1}
+
+.skill-icon-wrap{
+  width:42px;height:42px;
+  border-radius:10px;
+  background:var(--green-dim);
+  border:1px solid rgba(0,232,122,0.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+  margin-bottom:18px;
+}
+.skill-name{font-size:0.92rem;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-0.01em}
+.skill-desc{font-size:0.77rem;color:var(--muted);line-height:1.7;margin-bottom:18px}
+
+/* Skill bar */
+.skill-bars{display:flex;flex-direction:column;gap:8px}
+.skill-bar-item{display:flex;align-items:center;gap:10px;font-size:0.68rem}
+.skill-bar-label{font-family:var(--mono);color:var(--muted);width:72px;flex-shrink:0;font-size:0.6rem}
+.skill-bar-track{flex:1;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden}
+.skill-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--green),var(--blue));
+  border-radius:2px;
+  width:0;
+  transition:width 1s cubic-bezier(0.4,0,0.2,1);
+}
+.skill-card.animated .skill-bar-fill{width:var(--pct)}
+
+/* PROJECTS */
+#projects{background:var(--bg2)}
+
+.projects-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.proj-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  transition:all 0.22s;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+.proj-card:hover{border-color:rgba(0,232,122,0.2);transform:translateY(-2px);box-shadow:0 20px 56px rgba(0,0,0,0.45)}
+
+.proj-card.featured{grid-column:span 2}
+
+.proj-thumb{
+  height:160px;
+  position:relative;
+  overflow:hidden;
+}
+.proj-card.featured .proj-thumb{height:200px}
+.proj-thumb-bg{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;
+  opacity:0.15;
+}
+.proj-thumb-gradient{
+  position:absolute;inset:0;
+}
+
+/* different color per card */
+.proj-card:nth-child(1) .proj-thumb-gradient{background:linear-gradient(135deg,#0d1f14,#060b0f)}
+.proj-card:nth-child(1) .proj-thumb-bg{color:#00e87a}
+.proj-card:nth-child(2) .proj-thumb-gradient{background:linear-gradient(135deg,#0e1220,#080611)}
+.proj-card:nth-child(2) .proj-thumb-bg{color:#3d7eff}
+.proj-card:nth-child(3) .proj-thumb-gradient{background:linear-gradient(135deg,#1a100d,#0a0608)}
+.proj-card:nth-child(3) .proj-thumb-bg{color:#f59e0b}
+.proj-card:nth-child(4) .proj-thumb-gradient{background:linear-gradient(135deg,#141020,#07040f)}
+.proj-card:nth-child(4) .proj-thumb-bg{color:#8b5cf6}
+.proj-card:nth-child(5) .proj-thumb-gradient{background:linear-gradient(135deg,#0d1a1f,#04090c)}
+.proj-card:nth-child(5) .proj-thumb-bg{color:#00b8ff}
+
+/* Code-like pattern in thumb */
+.proj-code-lines{
+  position:absolute;
+  left:24px;right:24px;bottom:24px;
+  font-family:var(--mono);
+  font-size:0.6rem;
+  line-height:1.8;
+  opacity:0.4;
+}
+.pcl-green{color:#00e87a}
+.pcl-blue{color:#3d7eff}
+.pcl-muted{color:#6a6a8a}
+.pcl-white{color:rgba(255,255,255,0.7)}
+
+.proj-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  padding:22px 24px 0;
+  gap:12px;
+}
+.proj-meta{flex:1}
+.proj-title{font-size:0.98rem;font-weight:700;color:#fff;letter-spacing:-0.01em;margin-bottom:5px}
+.proj-org{font-family:var(--mono);font-size:0.6rem;color:var(--green)}
+.proj-status{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 10px;
+  border-radius:6px;
+  font-family:var(--mono);
+  font-size:0.58rem;
+  font-weight:500;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.proj-status.live{background:rgba(0,232,122,0.1);border:1px solid rgba(0,232,122,0.2);color:var(--green)}
+.proj-status.live::before{content:'●';font-size:0.5rem}
+.proj-status.delivered{background:rgba(61,126,255,0.1);border:1px solid rgba(61,126,255,0.2);color:var(--blue)}
+
+.proj-desc{
+  padding:12px 24px;
+  font-size:0.8rem;
+  color:var(--muted);
+  line-height:1.8;
+}
+.proj-footer{
+  padding:16px 24px 22px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:auto;
+}
+.stack-pill{
+  font-family:var(--mono);
+  font-size:0.58rem;
+  padding:3px 9px;
+  border-radius:5px;
+  background:rgba(61,126,255,0.07);
+  border:1px solid rgba(61,126,255,0.13);
+  color:rgba(100,156,255,0.85);
+}
+
+/* EXPERIENCE */
+#experience{background:var(--bg)}
+
+.exp-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+
+.exp-left h3{font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px}
+.exp-left p{font-size:0.82rem;color:var(--muted);line-height:1.85;margin-bottom:32px}
+
+.career-path{
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius-lg);
+  padding:28px;
+  position:sticky;
+  top:32px;
+}
+.career-title{font-family:var(--mono);font-size:0.62rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px}
+.career-item{
+  display:flex;
+  gap:16px;
+  margin-bottom:20px;
+  position:relative;
+}
+.career-item:last-child{margin-bottom:0}
+.career-line-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
+.career-dot{
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--green);
+  border:2px solid var(--bg);
+  flex-shrink:0;
+  margin-top:4px;
+  box-shadow:0 0 0 2px rgba(0,232,122,0.2);
+}
+.career-dot.dim{background:var(--muted2);box-shadow:none}
+.career-line{
+  flex:1;
+  width:1px;
+  background:linear-gradient(to bottom,rgba(0,232,122,0.25),rgba(0,232,122,0.05));
+  margin:4px 0 0;
+}
+.career-info{}
+.career-period{font-family:var(--mono);font-size:0.58rem;color:var(--muted);margin-bottom:2px}
+.career-role{font-size:0.82rem;font-weight:600;color:#fff;margin-bottom:2px}
+.career-org{font-family:var(--mono);font-size:0.6rem;color:var(--green)}
+
+.exp-cards{display:flex;flex-direction:column;gap:14px}
+.exp-card{
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px 26px;
+  transition:all 0.2s;
+  position:relative;
+  overflow:hidden;
+}
+.exp-card:hover{border-color:rgba(0,232,122,0.18);background:var(--card)}
+.exp-card::after{
+  content:'';
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:2px;
+  background:var(--green);
+  opacity:0;
+  transition:opacity 0.2s;
+}
+.exp-card:hover::after{opacity:1}
+
+.exp-top{display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;gap:12px}
+.exp-role{font-size:0.9rem;font-weight:700;color:#fff}
+.exp-period{
+  font-family:var(--mono);
+  font-size:0.58rem;
+  color:var(--muted);
+  background:var(--surface);
+  padding:3px 9px;
+  border-radius:4px;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.exp-org{font-family:var(--mono);font-size:0.65rem;color:var(--green);margin-bottom:10px}
+.exp-desc{font-size:0.8rem;color:var(--muted);line-height:1.8}
+
+/* CONTACT */
+#contact{background:var(--bg2)}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1.1fr;
+  gap:72px;
+  align-items:center;
+}
+
+.contact-left .big-text{
+  font-size:clamp(2rem,3.2vw,2.8rem);
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-0.03em;
+  line-height:1.1;
+  margin-bottom:18px;
+}
+.contact-left .big-text .green{color:var(--green)}
+.contact-left p{font-size:0.85rem;color:var(--muted);line-height:1.9;margin-bottom:32px;max-width:340px}
+
+.contact-cards{display:flex;flex-direction:column;gap:10px}
+.contact-card{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 20px;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  text-decoration:none;
+  color:var(--text2);
+  transition:all 0.2s;
+  position:relative;
+  overflow:hidden;
+}
+.contact-card::after{
+  content:'↗';
+  position:absolute;
+  right:20px;
+  font-size:0.75rem;
+  color:var(--muted2);
+  transition:all 0.2s;
+}
+.contact-card:hover{border-color:rgba(0,232,122,0.22);background:var(--card2);transform:translateX(4px)}
+.contact-card:hover::after{color:var(--green);right:16px}
+.contact-icon{
+  width:38px;height:38px;
+  border-radius:9px;
+  background:var(--green-dim);
+  border:1px solid rgba(0,232,122,0.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.95rem;
+  flex-shrink:0;
+}
+.contact-label{font-family:var(--mono);font-size:0.58rem;color:var(--muted);margin-bottom:2px}
+.contact-val{font-size:0.82rem;font-weight:600;color:#fff}
+
+/* FOOTER */
+footer{
+  padding:20px 64px;
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-family:var(--mono);
+  font-size:0.6rem;
+  color:var(--muted2);
+}
+
+/* REVEAL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.65s cubic-bezier(0.4,0,0.2,1),transform 0.65s cubic-bezier(0.4,0,0.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:0.1s}
+.d2{transition-delay:0.2s}
+.d3{transition-delay:0.3s}
+.d4{transition-delay:0.4s}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .topnav{padding:0 24px}
+  .nav-links{display:none}
+  .nav-mobile-links{display:flex;gap:12px;list-style:none}
+  .nav-mobile-links a{font-size:0.72rem;color:var(--muted);text-decoration:none;font-weight:500;transition:color 0.15s}
+  .nav-mobile-links a:hover,.nav-mobile-links a.active{color:var(--green)}
+  .nav-status{display:none}
+  .section{padding:72px 28px}
+  .hero{padding:80px 28px;min-height:auto}
+  .about-grid{grid-template-columns:1fr}
+  .profile-card{position:static}
+  .skills-grid{grid-template-columns:1fr 1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .proj-card.featured{grid-column:span 1}
+  .exp-layout{grid-template-columns:1fr;gap:40px}
+  .career-path{position:static}
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+  footer{padding:20px 28px}
+}
+.nav-mobile-links{display:none}
+@media(max-width:640px){
+  .skills-grid{grid-template-columns:1fr}
+  .stats-row{flex-direction:column;max-width:none}
+  .stat-item{border-right:none;border-bottom:1px solid var(--border)}
+  .stat-item:last-child{border-bottom:none}
+  .hero-name{font-size:3.2rem}
+  .nav-social{display:none}
+}
+
+/* PROJECT STATS BAR */
+.proj-stats{
+  display:flex;align-items:center;gap:0;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  overflow:hidden;
+  margin-bottom:32px;
+}
+.pstat{flex:1;padding:18px 24px;text-align:center}
+.pstat-div{width:1px;background:var(--border);align-self:stretch}
+.pstat-n{display:block;font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1}
+.pstat-l{font-family:var(--mono);font-size:0.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;display:block}
+
+/* Project card color themes */
+.proj-card.c1 .proj-thumb-gradient{background:linear-gradient(135deg,#0f1a10,#060c07)}
+.proj-card.c1 .proj-thumb-bg{color:#00e87a}
+.proj-card.c2 .proj-thumb-gradient{background:linear-gradient(135deg,#0e1220,#080611)}
+.proj-card.c2 .proj-thumb-bg{color:#3d7eff}
+.proj-card.c3 .proj-thumb-gradient{background:linear-gradient(135deg,#1a100d,#0a0608)}
+.proj-card.c3 .proj-thumb-bg{color:#f59e0b}
+.proj-card.c4 .proj-thumb-gradient{background:linear-gradient(135deg,#0d1a1a,#04090c)}
+.proj-card.c4 .proj-thumb-bg{color:#00d4aa}
+.proj-card.c5 .proj-thumb-gradient{background:linear-gradient(135deg,#14101f,#07040f)}
+.proj-card.c5 .proj-thumb-bg{color:#8b5cf6}
+.proj-card.c6 .proj-thumb-gradient{background:linear-gradient(135deg,#0d1520,#040810)}
+.proj-card.c6 .proj-thumb-bg{color:#3d7eff}
+.proj-card.c7 .proj-thumb-gradient{background:linear-gradient(135deg,#0d1f14,#060b0f)}
+.proj-card.c7 .proj-thumb-bg{color:#00e87a}
+.proj-card.c8 .proj-thumb-gradient{background:linear-gradient(135deg,#1a140d,#0a0705)}
+.proj-card.c8 .proj-thumb-bg{color:#f59e0b}
+.proj-card.c9 .proj-thumb-gradient{background:linear-gradient(135deg,#1a0d0d,#0a0505)}
+.proj-card.c9 .proj-thumb-bg{color:#ef4444}
+
+/* Building badge */
+.proj-status.building{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);color:#f59e0b}
+.proj-status.building::before{content:'⚙ ';font-size:0.55rem}
+
+/* proj-status as anchor */
+a.proj-status{text-decoration:none;cursor:pointer;transition:opacity 0.15s}
+a.proj-status:hover{opacity:0.8}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<div class="layout">
+
+<!-- TOP NAVBAR -->
+<nav class="topnav">
+  <a href="#hero" class="nav-logo">
+    <span class="nav-logo-name">Harmeen Amjad</span>
+    <span class="nav-logo-badge">Laravel Dev</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#hero" class="active"><span class="n-icon">⌂</span> Home</a></li>
+    <li><a href="#about"><span class="n-icon">◎</span> About</a></li>
+    <li><a href="#skills"><span class="n-icon">⚡</span> Skills</a></li>
+    <li><a href="#projects"><span class="n-icon">◈</span> Projects</a></li>
+    <li><a href="#experience"><span class="n-icon">◷</span> Experience</a></li>
+    <li><a href="#contact"><span class="n-icon">✉</span> Contact</a></li>
+  </ul>
+
+  <!-- Mobile links -->
+  <ul class="nav-mobile-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      Available for work
+    </div>
+    <div class="nav-social">
+       <a href="https://github.com/harmeen928" target="_blank" class="social-link" title="GitHub">GH</a> 
+      <a href="https://www.fiverr.com/harmeenamjad" target="_blank" class="social-link" title="Fiverr">FV</a>
+      <a href="https://portfolio-nu-seven-10.vercel.app" target="_blank" class="social-link" title="Portfolio">↗</a>
+      <a href="mailto:personalharry6@gmail.com" class="social-link" title="Email">@</a>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-noise"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        <span class="badge-text">Open to Laravel freelance projects</span>
+      </div>
+
+      <div class="hero-greeting">// Islamabad, Pakistan</div>
+
+      <h1 class="hero-name">
+        <span id="typed-name">Harmeen</span><br/>
+        <span class="accent">Amjad.</span>
+      </h1>
+
+      <p class="hero-tagline">
+        I build <strong>production-grade</strong> web systems with Laravel —<br/>
+        payment integrations, admin dashboards, multi-role platforms.
+      </p>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num">4<span>+</span></div>
+          <div class="stat-label">Years coding</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">9<span>+</span></div>
+          <div class="stat-label">Live projects</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">★<span>5</span></div>
+          <div class="stat-label">Fiverr rating</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">2<span>×</span></div>
+          <div class="stat-label">Domains (med + dev)</div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View Projects →</a>
+        <a href="#contact" class="btn btn-ghost">Let's Talk</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="sec-eyebrow">
+      <div class="sec-eyebrow-line"></div>
+      <div class="sec-eyebrow-text">01 — About</div>
+    </div>
+    <div class="sec-title">The developer behind the code.</div>
+
+    <div class="about-grid">
+
+      <div class="profile-card reveal">
+        <div class="profile-header">
+          <div class="avatar-wrap">
+            <div class="avatar">HA</div>
+            <div class="avatar-ring"></div>
+          </div>
+          <div class="profile-name">Harmeen Amjad</div>
+          <div class="profile-handle">@laravel-developer · islamabad.pk</div>
+        </div>
+        <div class="profile-body">
+          <div class="profile-row">
+            <span class="pr-key">Experience</span>
+            <span class="pr-val">4+ Years</span>
+          </div>
+          <div class="profile-row">
+            <span class="pr-key">primary_stack</span>
+            <span class="pr-val">Laravel / PHP</span>
+          </div>
+          <div class="profile-row">
+            <span class="pr-key">Location</span>
+            <span class="pr-val">Islamabad, PK</span>
+          </div>
+          <div class="profile-row">
+            <span class="pr-key">Freelance</span>
+            <span class="pr-val green dot">Available</span>
+          </div>
+          <div class="profile-row">
+            <span class="pr-key">Education</span>
+            <span class="pr-val">MSCS</span>
+          </div>
+          <div class="profile-row">
+            <span class="pr-key">Focus</span>
+            <span class="pr-val">Healthcare Web Systems</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-text reveal d2">
+        <h3>Four years of building things that actually ship.</h3>
+        <p>
+          I'm a <strong>Laravel and PHP developer</strong> based in Islamabad with four years of hands-on experience building production web applications. My work spans admission portals, job portals, PayPro payment integrations, multi-role admin dashboards, and research management platforms.
+        </p>
+        <p>
+          Every project I take on is treated as a <strong>complete system</strong> — database schema, backend logic, API design, and frontend interface considered together from day one. Not bolted together at the end.
+        </p>
+        <p>
+          On Fiverr, I've built a reputation for <strong>clean code, honest timelines, and delivering exactly what was scoped</strong>. Studying MBBS simultaneously gives me a rare edge: I understand the domain when building for healthcare and medical education clients.
+        </p>
+        <div class="about-divider"></div>
+        <div class="tag-cloud">
+          <span class="tag">Laravel</span>
+          <span class="tag">PHP 8.2</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">Livewire</span>
+          <span class="tag">Alpine.js</span>
+          <span class="tag">PayPro</span>
+          <span class="tag">Tailwind CSS</span>
+          <span class="tag">Spatie</span>
+          <span class="tag">cPanel</span>
+          <span class="tag">Blade</span>
+          <span class="tag">Node.js</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" id="skills">
+    <div class="sec-eyebrow">
+      <div class="sec-eyebrow-line"></div>
+      <div class="sec-eyebrow-text">02 — Skills</div>
+    </div>
+    <div class="sec-title">What I actually build with.</div>
+    <div class="sec-sub">Tools used in real production systems — not just toy projects.</div>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal" data-skill>
+        <div class="skill-icon-wrap">⚙️</div>
+        <div class="skill-name">Backend & Laravel</div>
+        <p class="skill-desc">Full application architecture with auth, role-based access, queues, events, and complex Eloquent relationships.</p>
+        <div class="skill-bars">
+          <div class="skill-bar-item"><span class="skill-bar-label">Laravel</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:95%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">PHP 8.2</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:90%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">Eloquent</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:88%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d1" data-skill>
+        <div class="skill-icon-wrap">💳</div>
+        <div class="skill-name">Payment Integration</div>
+        <p class="skill-desc">End-to-end PayPro integration with webhook verification, phone sanitization, transaction logging, and fallback flows.</p>
+        <div class="skill-bars">
+          <div class="skill-bar-item"><span class="skill-bar-label">PayPro API</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:92%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">Webhooks</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:85%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">Order Flow</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:88%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d2" data-skill>
+        <div class="skill-icon-wrap">🗄️</div>
+        <div class="skill-name">Database Design</div>
+        <p class="skill-desc">Schema design, migrations, query optimization, and PDO-based systems for legacy PHP applications.</p>
+        <div class="skill-bars">
+          <div class="skill-bar-item"><span class="skill-bar-label">MySQL</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:90%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">Migrations</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:92%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">PDO</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:82%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card reveal" data-skill>
+        <div class="skill-icon-wrap">🖥️</div>
+        <div class="skill-name">Admin Dashboards</div>
+        <p class="skill-desc">Multi-role admin panels with DataTables, CSV export, modal detail views, filters, and full CRUD operations.</p>
+        <div class="skill-bars">
+          <div class="skill-bar-item"><span class="skill-bar-label">Spatie</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:88%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">DataTables</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:85%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">Livewire</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:80%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d1" data-skill>
+        <div class="skill-icon-wrap">🎨</div>
+        <div class="skill-name">Frontend</div>
+        <p class="skill-desc">Responsive Blade templates with Tailwind, Alpine.js interactivity, and clean semantic HTML.</p>
+        <div class="skill-bars">
+          <div class="skill-bar-item"><span class="skill-bar-label">Tailwind</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:88%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">Alpine.js</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:80%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">JavaScript</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:75%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d2" data-skill>
+        <div class="skill-icon-wrap">🚀</div>
+        <div class="skill-name">Deployment</div>
+        <p class="skill-desc">cPanel hosting, PHP version enforcement via .htaccess, Composer platform config, and environment management.</p>
+        <div class="skill-bars">
+          <div class="skill-bar-item"><span class="skill-bar-label">cPanel</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:90%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">Composer</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:87%"></div></div></div>
+          <div class="skill-bar-item"><span class="skill-bar-label">.htaccess</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:82%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="sec-eyebrow">
+      <div class="sec-eyebrow-line"></div>
+      <div class="sec-eyebrow-text">03 — Projects</div>
+    </div>
+    <div class="sec-title">Selected work.</div>
+    <div class="sec-sub">Production systems built from scratch and deployed for real users.</div>
+
+    <!-- Stats counter above grid -->
+    <div class="proj-stats reveal">
+      <div class="pstat"><span class="pstat-n">9</span><span class="pstat-l">Live Projects</span></div>
+      <div class="pstat-div"></div>
+      <div class="pstat"><span class="pstat-n">5+</span><span class="pstat-l">Domains Deployed</span></div>
+      <div class="pstat-div"></div>
+      <div class="pstat"><span class="pstat-n">3</span><span class="pstat-l">Institutions Served</span></div>
+      <div class="pstat-div"></div>
+      <div class="pstat"><span class="pstat-n">100%</span><span class="pstat-l">On-time Delivery</span></div>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- 1: GAK -->
+      <div class="proj-card c1 reveal">
+        <div class="proj-thumb">
+          <div class="proj-thumb-gradient"></div>
+          <div class="proj-thumb-bg">🏢</div>
+          <div class="proj-code-lines">
+            <div><span class="pcl-muted">// Corporate website</span></div>
+            <div><span class="pcl-blue">Route</span><span class="pcl-white">::view(</span><span class="pcl-green">'/'</span><span class="pcl-white">, </span><span class="pcl-green">'home'</span><span class="pcl-white">);</span></div>
+            <div><span class="pcl-muted">// gak.com.pk</span></div>
+          </div>
+        </div>
+        <div class="proj-header">
+          <div class="proj-meta">
+            <div class="proj-title">GAK Corporate Website</div>
+            <div class="proj-org">gak.com.pk</div>
+          </div>
+          <a href="https://gak.com.pk/" target="_blank" class="proj-status live">Live ↗</a>
+        </div>
+        <p class="proj-desc">Full corporate website for GAK — company profile, services, and contact system. Clean design with professional layout.</p>
+        <div class="proj-footer">
+          <span class="stack-pill">Laravel</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Blade</span>
+          <span class="stack-pill">Tailwind CSS</span>
+        </div>
+      </div>
+
+      <!-- 2: YN International -->
+      <div class="proj-card c2 reveal d1">
+        <div class="proj-thumb">
+          <div class="proj-thumb-gradient"></div>
+          <div class="proj-thumb-bg">🌐</div>
+          <div class="proj-code-lines">
+            <div><span class="pcl-muted">// International firm site</span></div>
+            <div><span class="pcl-blue">$page</span><span class="pcl-white"> = Page::find(</span><span class="pcl-blue">$slug</span><span class="pcl-white">);</span></div>
+            <div><span class="pcl-muted">// yninternational.com.pk</span></div>
+          </div>
+        </div>
+        <div class="proj-header">
+          <div class="proj-meta">
+            <div class="proj-title">YN International</div>
+            <div class="proj-org">yninternational.com.pk</div>
+          </div>
+          <a href="https://yninternational.com.pk/" target="_blank" class="proj-status live">Live ↗</a>
+        </div>
+        <p class="proj-desc">Business website for YN International — services showcase, about section, and client-facing contact system built with Laravel.</p>
+        <div class="proj-footer">
+          <span class="stack-pill">Laravel</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Blade</span>
+          <span class="stack-pill">Bootstrap</span>
+        </div>
+      </div>
+
+      <!-- 3: IMDC Jobs (featured) -->
+      <div class="proj-card c3 featured reveal">
+        <div class="proj-thumb">
+          <div class="proj-thumb-gradient"></div>
+          <div class="proj-thumb-bg">💼</div>
+          <div class="proj-code-lines">
+            <div><span class="pcl-muted">// Role-based job portal</span></div>
+            <div><span class="pcl-blue">$user</span><span class="pcl-white">->hasRole(</span><span class="pcl-green">'employer'</span><span class="pcl-white">)</span></div>
+            <div>&nbsp;&nbsp;<span class="pcl-white">? redirect(</span><span class="pcl-green">'employer.dashboard'</span><span class="pcl-white">)</span></div>
+            <div>&nbsp;&nbsp;<span class="pcl-white">: redirect(</span><span class="pcl-green">'candidate.dashboard'</span><span class="pcl-white">);</span></div>
+          </div>
+        </div>
+        <div class="proj-header">
+          <div class="proj-meta">
+            <div class="proj-title">IMDC Job Portal</div>
+            <div class="proj-org">IMDC · jobs.imdc.ac.pk</div>
+          </div>
+          <a href="https://jobs.imdc.ac.pk/" target="_blank" class="proj-status live">Live ↗</a>
+        </div>
+        <p class="proj-desc">Full-featured institutional job board for IMDC with employer and candidate roles, job listing management, application tracking, filtered search, and role-based dashboards using Spatie permissions.</p>
+        <div class="proj-footer">
+          <span class="stack-pill">Laravel</span>
+          <span class="stack-pill">Spatie Roles</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Livewire</span>
+          <span class="stack-pill">Tailwind CSS</span>
+          <span class="stack-pill">Alpine.js</span>
+        </div>
+      </div>
+
+      <!-- 4: Admission Portal -->
+      <div class="proj-card c4 reveal">
+        <div class="proj-thumb">
+          <div class="proj-thumb-gradient"></div>
+          <div class="proj-thumb-bg">🎓</div>
+          <div class="proj-code-lines">
+            <div><span class="pcl-muted">// Admission workflow</span></div>
+            <div><span class="pcl-blue">Route</span><span class="pcl-white">::middleware(</span><span class="pcl-green">'auth'</span><span class="pcl-white">)</span></div>
+            <div>&nbsp;&nbsp;<span class="pcl-white">->group(fn() => {});</span></div>
+          </div>
+        </div>
+        <div class="proj-header">
+          <div class="proj-meta">
+            <div class="proj-title">IMDC Admission Portal</div>
+            <div class="proj-org">IMDC · admission.imdc.ac.pk</div>
+          </div>
+          <a href="https://admission.imdc.ac.pk/" target="_blank" class="proj-status live">Live ↗</a>
+        </div>
+        <p class="proj-desc">Multi-step admission system with application forms, document uploads, real-time status tracking, and admin review panel with approval workflows.</p>
+        <div class="proj-footer">
+          <span class="stack-pill">Laravel</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Blade</span>
+          <span class="stack-pill">Spatie</span>
+          <span class="stack-pill">Alpine.js</span>
+        </div>
+      </div>
+
+      <!-- 5: Research -->
+      <div class="proj-card c5 reveal d1">
+        <div class="proj-thumb">
+          <div class="proj-thumb-gradient"></div>
+          <div class="proj-thumb-bg">🔬</div>
+          <div class="proj-code-lines">
+            <div><span class="pcl-muted">// Research tracker</span></div>
+            <div><span class="pcl-blue">$stmt</span><span class="pcl-white"> = $pdo->prepare(</span></div>
+            <div>&nbsp;&nbsp;<span class="pcl-green">"SELECT * FROM projects"</span><span class="pcl-white">);</span></div>
+          </div>
+        </div>
+        <div class="proj-header">
+          <div class="proj-meta">
+            <div class="proj-title">IMDC Research Management</div>
+            <div class="proj-org">research.netsmart.pk</div>
+          </div>
+          <a href="https://research.netsmart.pk/" target="_blank" class="proj-status live">Live ↗</a>
+        </div>
+        <p class="proj-desc">PHP/MySQL research tracker replacing Google Sheets for IMDC R&amp;D. PIN-based auth, field-level validation, admin panel, Collaborations module, filterable project table.</p>
+        <div class="proj-footer">
+          <span class="stack-pill">PHP</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">PDO</span>
+          <span class="stack-pill">Bootstrap</span>
+          <span class="stack-pill">JavaScript</span>
+        </div>
+      </div>
+
+      <!-- 6: CMS (featured) -->
+      <div class="proj-card c6 featured reveal">
+        <div class="proj-thumb">
+          <div class="proj-thumb-gradient"></div>
+          <div class="proj-thumb-bg">🏫</div>
+          <div class="proj-code-lines">
+            <div><span class="pcl-muted">// Campus Management System</span></div>
+            <div><span class="pcl-blue">$modules</span><span class="pcl-white"> = [</span><span class="pcl-green">'fees'</span><span class="pcl-white">,</span></div>
+            <div>&nbsp;&nbsp;<span class="pcl-green">'attendance'</span><span class="pcl-white">, </span><span class="pcl-green">'exams'</span><span class="pcl-white">,</span></div>
+            <div>&nbsp;&nbsp;<span class="pcl-green">'promotions'</span><span class="pcl-white">, </span><span class="pcl-green">'feedback'</span><span class="pcl-white">];</span></div>
+          </div>
+        </div>
+        <div class="proj-header">
+          <div class="proj-meta">
+            <div class="proj-title">IMDC Campus Management System</div>
+            <div class="proj-org">IMDC · cms.imdc.ac.pk</div>
+          </div>
+          <a href="https://cms.imdc.ac.pk/" target="_blank" class="proj-status live">Live ↗</a>
+        </div>
+        <p class="proj-desc">Full institutional CMS covering academic structure, student management, fee management, attendance, exam results, feedback, promotions, and a multi-role dashboard. The backbone of IMDC's digital operations.</p>
+        <div class="proj-footer">
+          <span class="stack-pill">Laravel</span>
+          <span class="stack-pill">Livewire</span>
+          <span class="stack-pill">Alpine.js</span>
+          <span class="stack-pill">Spatie</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Tailwind CSS</span>
+        </div>
+      </div>
+
+      <!-- 7: AI Healthcare -->
+      <div class="proj-card c7 reveal">
+        <div class="proj-thumb">
+          <div class="proj-thumb-gradient"></div>
+          <div class="proj-thumb-bg">🏥</div>
+          <div class="proj-code-lines">
+            <div><span class="pcl-muted">// PayPro payment flow</span></div>
+            <div><span class="pcl-blue">$order</span><span class="pcl-white"> = PayPro::create([</span></div>
+            <div>&nbsp;&nbsp;<span class="pcl-green">'amount'</span><span class="pcl-white"> => $fee]);</span></div>
+          </div>
+        </div>
+        <div class="proj-header">
+          <div class="proj-meta">
+            <div class="proj-title">AI in Healthcare Programme</div>
+            <div class="proj-org">ai.netsmart.pk</div>
+          </div>
+          <a href="https://ai.netsmart.pk/" target="_blank" class="proj-status live">Live ↗</a>
+        </div>
+        <p class="proj-desc">Laravel registration system for an IMDC clinical AI certificate programme. PayPro payment gateway, fee tiers, admin dashboard with CSV export, filterable table, and modal detail views.</p>
+        <div class="proj-footer">
+          <span class="stack-pill">Laravel</span>
+          <span class="stack-pill">PayPro API</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Tailwind CSS</span>
+          <span class="stack-pill">Alpine.js</span>
+        </div>
+      </div>
+
+      <!-- 8: Transport -->
+      <div class="proj-card c8 reveal d1">
+        <div class="proj-thumb">
+          <div class="proj-thumb-gradient"></div>
+          <div class="proj-thumb-bg">🚌</div>
+          <div class="proj-code-lines">
+            <div><span class="pcl-muted">// 4-role transport system</span></div>
+            <div><span class="pcl-blue">$fee</span><span class="pcl-white"> = TransportFee</span></div>
+            <div>&nbsp;&nbsp;<span class="pcl-white">::forStudent(</span><span class="pcl-blue">$id</span><span class="pcl-white">)->calc();</span></div>
+          </div>
+        </div>
+        <div class="proj-header">
+          <div class="proj-meta">
+            <div class="proj-title">School Transport Portal</div>
+            <div class="proj-org">IMDC · In Progress</div>
+          </div>
+          <span class="proj-status building">Building</span>
+        </div>
+        <p class="proj-desc">Multi-role transport management (Admin, Faculty, Student, Driver) — vehicle &amp; driver management, route assignment, salary tracking, and student fee calculation.</p>
+        <div class="proj-footer">
+          <span class="stack-pill">Laravel</span>
+          <span class="stack-pill">Livewire</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Tailwind CSS</span>
+          <span class="stack-pill">Alpine.js</span>
+        </div>
+      </div>
+
+      <!-- 9: Utek USA -->
+      <div class="proj-card c9 reveal">
+        <div class="proj-thumb">
+          <div class="proj-thumb-gradient"></div>
+          <div class="proj-thumb-bg">🏪</div>
+          <div class="proj-code-lines">
+            <div><span class="pcl-muted">// Medical e-commerce</span></div>
+            <div><span class="pcl-blue">Product</span><span class="pcl-white">::withCategory()</span></div>
+            <div>&nbsp;&nbsp;<span class="pcl-white">->paginate(</span><span class="pcl-blue">12</span><span class="pcl-white">);</span></div>
+          </div>
+        </div>
+        <div class="proj-header">
+          <div class="proj-meta">
+            <div class="proj-title">Utek USA — Medical Supplies</div>
+            <div class="proj-org">new.utek-usa.com</div>
+          </div>
+          <a href="https://new.utek-usa.com" target="_blank" class="proj-status live">Live ↗</a>
+        </div>
+        <p class="proj-desc">Laravel e-commerce platform for Utek USA medical supplies — product catalog, category management, and a clean professional storefront layout.</p>
+        <div class="proj-footer">
+          <span class="stack-pill">Laravel</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Blade</span>
+          <span class="stack-pill">Tailwind CSS</span>
+          <span class="stack-pill">Alpine.js</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience">
+  <div class="sec-eyebrow">
+    <div class="sec-eyebrow-line"></div>
+    <div class="sec-eyebrow-text">04 — Experience</div>
+  </div>
+  <div class="sec-title">Work history.</div>
+
+  <div class="exp-layout">
+
+    <!-- CAREER PATH -->
+    <div>
+      <div class="career-path reveal">
+        <div class="career-title">// Career path</div>
+
+        
+
+        <div class="career-item">
+          <div class="career-line-wrap">
+            <div class="career-dot"></div>
+            <div class="career-line"></div>
+          </div>
+          <div class="career-info">
+            <div class="career-period">2022 — Present</div>
+            <div class="career-role">Web Developer</div>
+            <div class="career-org">IMDC — Islamabad</div>
+          </div>
+        </div>
+<div class="career-item">
+  <div class="career-line-wrap">
+    <div class="career-dot"></div>
+    <div class="career-line"></div>
+  </div>
+  <div class="career-info">
+    <div class="career-period">Jul 2022 — Dec 2022</div>
+    <div class="career-role">Web Development Intern</div>
+    <div class="career-org">IMDC — Islamabad</div>
+  </div>
+</div>
+<div class="career-item">
+          <div class="career-line-wrap">
+            <div class="career-dot"></div>
+            <div class="career-line"></div>
+          </div>
+          <div class="career-info">
+            <div class="career-period">2023 — Present</div>
+            <div class="career-role">Freelance Laravel Developer</div>
+            <div class="career-org">Fiverr · Self-Employed</div>
+          </div>
+        </div>
+        <!-- NEW: INTERNSHIP -->
+      <div class="career-item">
+  <div class="career-line-wrap">
+    <div class="career-dot"></div>
+    <div class="career-line"></div>
+  </div>
+  <div class="career-info">
+    <div class="career-period">Jan 2024 — Mar 2024</div>
+    <div class="career-role">Full Stack Laravel Intern</div>
+    <div class="career-org">DevSphere Internship Program</div>
+  </div>
+</div>
+
+<div class="career-item">
+  <div class="career-line-wrap">
+    <div class="career-dot dim"></div>
+  </div>
+  <div class="career-info">
+    <div class="career-period"> 2025 — Present</div>
+    <div class="career-role">Lecturer (Basic Computer Skills)</div>
+    <div class="career-org">IMDC — Islamabad</div>
+  </div>
+
+</div>
+      </div>
+    </div>
+
+    <!-- EXPERIENCE CARDS -->
+    <div class="exp-cards">
+
+  <div class="exp-card reveal d1">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Web Developer</div>
+            <div class="exp-org">IMDC — Islamabad Medical & Dental College</div>
+          </div>
+          <div class="exp-period">2022 — Present</div>
+        </div>
+        <p class="exp-desc">
+    Developed and maintained multiple institutional systems including Admission Portal, Job Portal, AI-based healthcare platform, Student Management System, and Transport Management System. Responsible for full-stack development, database design, and system deployment using Laravel.
+  </p>
+      </div>
+      <div class="exp-card reveal d2">
+  <div class="exp-top">
+    <div>
+      <div class="exp-role">Web Development Intern</div>
+      <div class="exp-org">IMDC — Islamabad Medical & Dental College</div>
+    </div>
+    <div class="exp-period">Jul 2022 — Dec 2022</div>
+  </div>
+  <p class="exp-desc">
+    Completed 6-month internship focused on web development fundamentals and real-world system exposure. Worked on Laravel basics, frontend development (HTML, CSS, JavaScript), and assisted in internal college systems including admission and student modules under senior supervision.
+  </p>
+</div>
+      <div class="exp-card reveal">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Laravel Developer — Freelance</div>
+            <div class="exp-org">Fiverr · Self-Employed</div>
+          </div>
+          <div class="exp-period">2023 — Present</div>
+        </div>
+        <p class="exp-desc">
+          Building Laravel applications for clients worldwide. Specializing in custom web systems, payment integrations, admin dashboards, and multi-role platforms.
+        </p>
+      </div>
+
+    
+
+      <!-- NEW CARD: LECTURER -->
+    <div class="exp-card reveal d2">
+  <div class="exp-top">
+    <div>
+      <div class="exp-role">Lecturer — Web Development & Computer Skills</div>
+      <div class="exp-org">IMDC — Islamabad</div>
+    </div>
+    <div class="exp-period">Apr 2025 — Jun 2025</div>
+  </div>
+  <p class="exp-desc">
+    Taught students basic computer skills including MS Office, internet usage, file management, and computer fundamentals. Also introduced web development basics such as HTML, CSS, and beginner-level JavaScript.
+  </p>
+</div>
+
+      <div class="exp-card reveal d2">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Full Stack Developer — Intern</div>
+            <div class="exp-org">DevSphere Internship Programme</div>
+          </div>
+          <div class="exp-period">2024</div>
+        </div>
+        <p class="exp-desc">
+          Completed full stack training including Node.js APIs, CRUD apps, and dashboard development with real-time validation and deployment practices.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <div class="sec-eyebrow">
+          <div class="sec-eyebrow-line"></div>
+          <div class="sec-eyebrow-text">05 — Contact</div>
+        </div>
+        <div class="big-text">Have a project?<br/>Let's <span class="green">build</span> it.</div>
+        <p>Available for Laravel freelance work — new systems, existing codebases, payment integrations, or admin panels. Fast turnaround, clean code, real communication.</p>
+        <a href="mailto:personalharry6@gmail.com" class="btn btn-primary">Send an Email →</a>
+      </div>
+
+      <div class="contact-cards reveal d2">
+        <a href="mailto:personalharry6@gmail.com" class="contact-card">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-label">email</div>
+            <div class="contact-val">personalharry6@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://www.fiverr.com/harmeenamjad" target="_blank" class="contact-card">
+          <div class="contact-icon">💼</div>
+          <div>
+            <div class="contact-label">fiverr</div>
+            <div class="contact-val">https://www.fiverr.com/harmeenamjad</div>
+          </div>
+        </a>
+        <a href="https://portfolio-nu-seven-10.vercel.app" target="_blank" class="contact-card">
+          <div class="contact-icon">🔗</div>
+          <div>
+            <div class="contact-label">portfolio</div>
+            <div class="contact-val">portfolio-nu-seven-10.vercel.app</div>
+          </div>
+        </a>
+        <!-- <a href="https://github.com" target="_blank" class="contact-card">
+          <div class="contact-icon">🐙</div>
+          <div>
+            <div class="contact-label">github</div>
+            <div class="contact-val">github.com/harmeen</div>
+          </div>
+        </a> -->
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2025 Harmeen Amjad · Islamabad, PK</span>
+    <span>Laravel Developer · Open to freelance · <span style="color:var(--green)">●</span> Available</span>
+  </footer>
+
+</main>
+</div>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+});
+(function animRing(){
+  rx += (mx-rx)*0.1;
+  ry += (my-ry)*0.1;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.skill-card,.proj-card,.exp-card,.contact-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cursor.style.width='12px'; cursor.style.height='12px'; ring.style.width='44px'; ring.style.height='44px'; });
+  el.addEventListener('mouseleave',()=>{ cursor.style.width='6px'; cursor.style.height='6px'; ring.style.width='28px'; ring.style.height='28px'; });
+});
+
+// SCROLL REVEAL + SKILL BAR ANIMATION
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // animate skill bars if this card has them
+      if(e.target.hasAttribute('data-skill')){
+        setTimeout(()=>e.target.classList.add('animated'), 200);
+      }
+    }
+  });
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.querySelectorAll('[data-skill]').forEach(el=>obs.observe(el));
+
+// ACTIVE NAV
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a, .nav-mobile-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{ if(window.scrollY >= s.offsetTop-220) cur=s.id; });
+  navLinks.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')==='#'+cur); });
+},{passive:true});
+</script>
+</body>
+</html>
